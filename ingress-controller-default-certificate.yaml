@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1alpha3
+kind: Certificate
+metadata:
+  name: ingress-https
+  namespace: ingress-nginx
+spec:
+  commonName: kubernetes.docker.internal
+  dnsNames:
+    - kubernetes.docker.internal
+  secretName: ingress-https
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer

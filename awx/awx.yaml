@@ -1,0 +1,46 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: awx
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+  namespace: default
+spec:
+  tower_hostname: awx.example.com
+  tower_admin_user: admin
+  tower_admin_password_secret: awx-admin-password
+  tower_admin_email: me@me.com
+  tower_ingress_type: Ingress 
+  tower_replicas: 1
+  # service is clusterIP by default _type: Ingress changes to nodePort
+  tower_web_resource_requirements:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  tower_task_resource_requirements:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: awx-postgres-configuration
+  namespace: default
+stringData:
+  host: kubernetes.docker.internal
+  port: "5432"
+  database: awx
+  username: awx
+  password: "1234"
+type: Opaque

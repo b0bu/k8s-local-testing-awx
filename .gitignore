@@ -1,0 +1,6 @@
+terraform.tfstate*
+.terraform.lock.hcl
+self-cert/
+.terraform
+.DS_Store
+backups/
